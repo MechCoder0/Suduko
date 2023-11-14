@@ -1,5 +1,5 @@
 import pygame
-from util import Util
+from Util.util import Util
 
 class ScreenWriter:
 

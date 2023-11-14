@@ -2,7 +2,7 @@ from .base_screen import BaseScreen
 from Controllers.start_controller import StartScreenController
 from GameEngines.sudoku_engine import SudokuEngine
 from GameObjects.marker import Marker
-from util import Util
+from Util.util import Util
 
 class PlayEngine(BaseScreen):
     def __init__(self) -> None:

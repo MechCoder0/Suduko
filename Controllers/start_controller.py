@@ -1,6 +1,5 @@
 from pygame.locals import *
 from .base_controller import Controller
-from util import Util
 
 class StartScreenController(Controller):
     def __init__(self, game_state) -> None:

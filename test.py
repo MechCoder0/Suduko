@@ -2,6 +2,7 @@
 from Util.sudoku_generator import Generator
 from Util.sudoku_solver import SudokuSolver
 from Util.sudoku_util import SudokuUtil
+from Util.number_remover import NumberRemover
 
 
 board = [
@@ -28,8 +29,8 @@ board2 = [
   [8, 0, 0, 0, 0, 9, 0, 3, 0],
 ]
 
-SudokuUtil.print_board(board)
-
-solver = SudokuSolver(board)
+new_board = Generator().create_puzzle()
+SudokuUtil.print_board(new_board)
+solver = SudokuSolver(new_board)
 solver.solve_puzzle()
-SudokuUtil.print_board(board)
+SudokuUtil.print_board(new_board)

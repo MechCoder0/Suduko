@@ -5,10 +5,10 @@ class SudokuSolver():
         self.board = board
 
     def solve_puzzle(self):
-        if self.solve(0, 0):
-            print("Solved", self.board)
-        else:
-            print("Unsolvable")
+        if not self.solve(0, 0):
+            print("ERROR")
+            return False
+        return True
 
     
     def solve(self, i, j):
