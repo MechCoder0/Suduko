@@ -7,10 +7,12 @@ class Generator():
         self.min = 17
 
     def create_puzzle(self):
-        return self.generate_puzzle(0,0, self.new_board())
+        new_board = self.new_board()
+        self.generate_puzzle(0,0, new_board)
+        return new_board
     
 
-    def new_board():
+    def new_board(self):
         return [
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -27,8 +29,8 @@ class Generator():
         if self.min <= 0:
             return True
         
-        rand_x = random.randint(1, 9)
-        rand_y = random.randint(1, 9)
+        rand_x = random.randint(0, 8)
+        rand_y = random.randint(0, 8)
 
         if board[x][y] != 0:
             return self.generate_puzzle(rand_x, rand_y, board)
