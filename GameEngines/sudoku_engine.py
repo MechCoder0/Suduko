@@ -12,7 +12,9 @@ class SudokuEngine(BaseScreen):
         self.puzzle = self.get_easy_puzzle()
 
     def start_game(self):
-        self.add_numbers((100, 100), 100, self.puzzle)
+        top_left = (100, 100)
+        distance_between = 100
+        self.add_numbers(top_left, distance_between, self.puzzle)
         super().start_game(self.screen_writer.print_sudoku_board)
     
 
@@ -32,7 +34,11 @@ class SudokuEngine(BaseScreen):
         for x in range(9):
             for y in range(9):
                 location = (start_point[0] + (distance * x), start_point[1] + (distance * y))
-                Tile(location, str(puzzle[x][y]), [self.all_sprites])
+                can_edit = puzzle[x][y] == 0
+                if can_edit:
+                    Tile(location, '', can_edit=True, groups=[self.all_sprites])
+                else:
+                    Tile(location, str(puzzle[x][y]), groups=[self.all_sprites])
 
     def solve(self):
         SudokuSolver(self.puzzle).solve_puzzle()

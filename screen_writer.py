@@ -44,8 +44,6 @@ class ScreenWriter:
         self.write_text((0, self.screen_height/2), "Press Enter to start!")
         self.write_text((0, self.screen_height * .75), "Begin!", True, Util.get_middle(0, self.screen_width))
 
-
-
     def print_sudoku_board(self):
         self.surface.fill(self.WHITE)
 
@@ -61,12 +59,20 @@ class ScreenWriter:
 
     def draw_horizontal_soduko(self, start, end, dist, start_y):
         for x in range(9):
-            pygame.draw.line(self.surface, self.BLACK, (start, (dist * x) + start_y), 
+            if x % 3 == 0:
+                pygame.draw.line(self.surface, self.BLACK, (start, (dist * x) + start_y), 
+                             (end, dist * x + start_y), 15)
+            else:
+                pygame.draw.line(self.surface, self.BLACK, (start, (dist * x) + start_y), 
                              (end, dist * x + start_y), 5)
 
     def draw_vertical_soduko(self, start, end, dist, start_x):
         for x in range(9):
-            pygame.draw.line(self.surface, self.BLACK, ((dist * x) + start_x, start), 
+            if x % 3 == 0:
+                pygame.draw.line(self.surface, self.BLACK, ((dist * x) + start_x, start), 
+                             (dist * x + start_x, end), 15)
+            else:
+                pygame.draw.line(self.surface, self.BLACK, ((dist * x) + start_x, start), 
                              (dist * x + start_x, end), 5)
 
 
@@ -79,7 +85,7 @@ class ScreenWriter:
         top_right = (right, top)
         bottom_left = (left, bottom)
         bottom_right = (right, bottom)
-        pygame.draw.line(self.surface, self.BLACK, top_left, top_right, 5)
-        pygame.draw.line(self.surface, self.BLACK, top_left, bottom_left, 5)
-        pygame.draw.line(self.surface, self.BLACK, bottom_left, bottom_right, 5)
-        pygame.draw.line(self.surface, self.BLACK, bottom_right, top_right, 5)
+        pygame.draw.line(self.surface, self.BLACK, top_left, top_right, 15)
+        pygame.draw.line(self.surface, self.BLACK, top_left, bottom_left, 15)
+        pygame.draw.line(self.surface, self.BLACK, bottom_left, bottom_right, 15)
+        pygame.draw.line(self.surface, self.BLACK, bottom_right, top_right, 15)

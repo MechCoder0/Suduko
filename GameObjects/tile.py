@@ -2,7 +2,7 @@ from pygame import font
 from .generic_sprite import GenericSprite
 
 class Tile(GenericSprite):
-    def __init__(self, location, text, groups=None) -> None:
+    def __init__(self, location, text, can_edit=False, groups=None) -> None:
         size = (90, 90)
         super().__init__(location, size, groups=groups, color=(255,255,255))
         self.font = font.SysFont("Arial", 50)
