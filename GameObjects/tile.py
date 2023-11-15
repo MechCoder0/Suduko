@@ -15,8 +15,21 @@ class Tile(GenericSprite):
         self.clicked = False
 
     def on_click(self):
-        if self.can_edit:
-            self.image.fill(Color('dodgerblue2'))
+        if not self.can_edit:
+            return 
+        
+        self.image.fill(Color('dodgerblue2'))
 
-    def reset_color(self):
+        # if event.type == pg.KEYDOWN:
+        #     if event.key == pg.K_RETURN:
+        #         self.text = ''
+        #     elif event.key == pg.K_BACKSPACE:
+        #         self.text = self.text[:-1]
+        #     else:
+        #         self.text += event.unicode
+        #     # Re-render the text.
+        #     self.textSurf = FONT.render(self.text, True, self.color)
+
+
+    def reset(self):
         self.image.fill((255,255,255))

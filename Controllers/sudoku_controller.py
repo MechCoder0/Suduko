@@ -11,23 +11,27 @@ class SodukoController(Controller):
             QUIT: self.quit,
             KEYDOWN: {
                 K_ESCAPE: self.quit,
-                K_s: game_state.solve
+                K_s: game_state.solve,
+                K_BACKSPACE: self.reset_sprite,
             },
             MOUSEBUTTONUP:self.mouse_up,
             MOUSEBUTTONDOWN:self.mouse_down
         }
 
-    def run_action(self, events, approved_actions=[]):
+    def run_action(self, approved_actions=[]):
         # all actions are always approved for this controller.
         approved_actions.extend([self.quit, self.game_state.solve, self.mouse_down, self.mouse_up])
-        return super().run_action(events, approved_actions)
+        super().run_action(approved_actions)
     
     def mouse_up(self):
         self.set_clicked(False, True)
 
-    def mouse_down(self):
+    def reset_sprite(self):
         if len(self.clicked_sprites) > 0:
-            self.clicked_sprites.pop().reset_color()
+            self.clicked_sprites.pop().reset()
+
+    def mouse_down(self):
+        self.reset_sprite()
         self.set_clicked(True, False)
 
     def set_clicked(self, clicked, run_function):

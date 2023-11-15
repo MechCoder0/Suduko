@@ -1,4 +1,5 @@
 from pygame import quit
+from pygame.event import get
 from sys import exit
 
 class Controller:
@@ -14,7 +15,9 @@ class Controller:
         return result
     
 
-    def run_action(self, events, approved_actions=[]):
+    def run_action(self, approved_actions=[]):
+        events = get()
+        self.events = events
         for event in events:
             action = self.get_action(event)
             if action and action in approved_actions:

@@ -1,5 +1,4 @@
 import pygame
-import sys
 from GameDataInterfaces.game_data_accessor import GameDataAccessor
 from screen_writer import ScreenWriter
 
@@ -31,8 +30,7 @@ class BaseScreen():
                 screen(screen_params)
             else:
                 screen()
-            events = pygame.event.get()
-            self.controller.run_action(events)
+            self.controller.run_action()
             self.all_sprites.draw(self.displaysurface)
             
             pygame.display.update()

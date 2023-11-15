@@ -13,10 +13,10 @@ class StartScreenController(Controller):
             }
         }
 
-    def run_action(self, events, approved_actions=[]):
+    def run_action(self, approved_actions=[]):
         # all actions are always approved for this controller.
         approved_actions.extend([self.quit, self.start_chosen_game])
-        return super().run_action(events, approved_actions)
+        return super().run_action(approved_actions)
 
     def start_chosen_game(self):
         self.game_state.selections[self.chosen_game][0].start_game()
