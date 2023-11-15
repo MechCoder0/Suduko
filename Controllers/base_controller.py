@@ -1,3 +1,6 @@
+from pygame import quit
+from sys import exit
+
 class Controller:
     def __init__(self) -> None:
         self.actions = {}
@@ -16,3 +19,8 @@ class Controller:
             action = self.get_action(event)
             if action and action in approved_actions:
                 action()
+    
+    def quit(self):
+        print("Quitting the game.")
+        quit()
+        exit()

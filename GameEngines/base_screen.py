@@ -38,11 +38,6 @@ class BaseScreen():
             pygame.display.update()
             self.clock.tick(self.FPS)
 
-    def quit(self):
-        print("Quitting the game.")
-        pygame.quit()
-        sys.exit()
-
     def return_to_start_screen(self):
         print("Returning to Start")
         self.keep_playing = False
