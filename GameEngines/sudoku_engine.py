@@ -10,13 +10,13 @@ class SudokuEngine(BaseScreen):
         super().__init__(SodukoController)
         self.generator = Generator()
         self.puzzle = self.get_easy_puzzle()
+        self.clickable = []
 
     def start_game(self):
         top_left = (100, 100)
         distance_between = 100
         self.add_numbers(top_left, distance_between, self.puzzle)
         super().start_game(self.screen_writer.print_sudoku_board)
-    
 
     def get_easy_puzzle(self):
         new_puzzle = self.generator.create_puzzle()
@@ -36,9 +36,11 @@ class SudokuEngine(BaseScreen):
                 location = (start_point[0] + (distance * x), start_point[1] + (distance * y))
                 can_edit = puzzle[x][y] == 0
                 if can_edit:
-                    Tile(location, '', can_edit=True, groups=[self.all_sprites])
+                    tile = Tile(location, '', can_edit=True, groups=[self.all_sprites])
+                    self.clickable.append(tile)
                 else:
-                    Tile(location, str(puzzle[x][y]), groups=[self.all_sprites])
+                    tile = Tile(location, str(puzzle[x][y]), groups=[self.all_sprites])
+                
 
     def solve(self):
         SudokuSolver(self.puzzle).solve_puzzle()
