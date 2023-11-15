@@ -9,9 +9,9 @@ class SudokuEngine(BaseScreen):
     def __init__(self) -> None:
         super().__init__(SodukoController)
         self.generator = Generator()
+        self.puzzle = self.get_easy_puzzle()
 
     def start_game(self):
-        self.puzzle = self.get_easy_puzzle()
         self.add_numbers((100, 100), 100, self.puzzle)
         super().start_game(self.screen_writer.print_sudoku_board)
     

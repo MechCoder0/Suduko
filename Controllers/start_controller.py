@@ -19,6 +19,6 @@ class StartScreenController(Controller):
         return super().run_action(events, approved_actions)
 
     def start_chosen_game(self):
-        self.game_state.selections[self.chosen_game][0]().start_game()
+        self.game_state.selections[self.chosen_game][0].start_game()
         # if the game loop ends, return to start screen
         self.game_state.start_game()

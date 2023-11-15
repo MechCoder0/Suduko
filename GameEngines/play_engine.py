@@ -8,7 +8,7 @@ class PlayEngine(BaseScreen):
     def __init__(self) -> None:
         super().__init__(StartScreenController)
         self.selections = [
-            (SudokuEngine, (0, self.WIDTH))
+            (SudokuEngine(), (0, self.WIDTH))
         ]
 
     def start_game(self):
