@@ -1,17 +1,16 @@
 from pygame import font
 from pygame import Color
+from pygame.locals import *
 from .generic_sprite import GenericSprite
 
 class Tile(GenericSprite):
     def __init__(self, location, text, can_edit=False, groups=None) -> None:
-        size = (90, 90)
-        super().__init__(location, size, groups=groups, color=(255,255,255))
+        self.size = (90, 90)
+        super().__init__(location, self.size, groups=groups, color=(255,255,255))
         self.can_edit = can_edit
         self.font = font.SysFont("Arial", 50)
-        self.textSurf = self.font.render(text, 1, (0,0,0))
-        W = self.textSurf.get_width()
-        H = self.textSurf.get_height()
-        self.image.blit(self.textSurf, [size[0]/2 - W/2, size[1]/2 - H/2])
+        self.text = text
+        self.write_text()
         self.clicked = False
 
     def on_click(self):
@@ -19,17 +18,20 @@ class Tile(GenericSprite):
             return 
         
         self.image.fill(Color('dodgerblue2'))
+        self.write_text()
 
-        # if event.type == pg.KEYDOWN:
-        #     if event.key == pg.K_RETURN:
-        #         self.text = ''
-        #     elif event.key == pg.K_BACKSPACE:
-        #         self.text = self.text[:-1]
-        #     else:
-        #         self.text += event.unicode
-        #     # Re-render the text.
-        #     self.textSurf = FONT.render(self.text, True, self.color)
+    def write_text(self):
+        self.textSurf = self.font.render(self.text, True, (0,0,0))
+        self.W = self.textSurf.get_width()
+        self.H = self.textSurf.get_height()
+        self.image.blit(self.textSurf, [self.size[0]/2 - self.W/2, self.size[1]/2 - self.H/2])
 
+    def set_text(self, event):
+        self.reset(False)
+        self.text = event.unicode
+        self.write_text()
 
-    def reset(self):
+    def reset(self, keep_number):
         self.image.fill((255,255,255))
+        if keep_number:
+            self.write_text()

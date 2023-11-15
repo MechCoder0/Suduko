@@ -17,10 +17,10 @@ class Controller:
 
     def run_action(self, approved_actions=[]):
         events = get()
-        self.events = events
         for event in events:
             action = self.get_action(event)
             if action and action in approved_actions:
+                self.event = event
                 action()
     
     def quit(self):
