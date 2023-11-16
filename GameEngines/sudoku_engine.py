@@ -11,6 +11,7 @@ class SudokuEngine(BaseScreen):
         self.generator = Generator()
         self.puzzle = self.get_easy_puzzle()
         self.clickable = []
+        self.tiles = []
 
     def start_game(self):
         top_left = (100, 100)
@@ -31,17 +32,52 @@ class SudokuEngine(BaseScreen):
         return new_puzzle
     
     def add_numbers(self, start_point, distance, puzzle):
+        self.tiles = []
         for x in range(9):
+            self.tiles.append([])
             for y in range(9):
                 location = (start_point[0] + (distance * x), start_point[1] + (distance * y))
-                can_edit = puzzle[x][y] == 0
+                value = puzzle[x][y]
+                can_edit = value == 0
                 if can_edit:
-                    tile = Tile(location, '', can_edit=True, groups=[self.all_sprites])
+                    tile = Tile(location, '', value, can_edit=True, groups=[self.all_sprites])
                     self.clickable.append(tile)
                 else:
-                    tile = Tile(location, str(puzzle[x][y]), groups=[self.all_sprites])
+                    tile = Tile(location, str(puzzle[x][y]), value, groups=[self.all_sprites])
+                self.tiles[x].append(tile)
                 
 
     def solve(self):
         SudokuSolver(self.puzzle).solve_puzzle()
         self.add_numbers((100, 100), 100, self.puzzle)
+
+    def check_solution(self):
+        for x in range(len(self.tiles)):
+            for y in range(len(self.tiles[x])):
+                print("Checking:", x, y)
+                is_valid = self.is_valid(x, y, self.tiles[x][y].value)
+                print("It is valid: ", is_valid)
+                if not is_valid:
+                    print("Is not the valid solution")
+                    return False
+        print("Is the valid solution.")
+        return True
+    
+    def is_valid(self, i, j, val):
+        if val == 0:
+            return False 
+        
+        for k in range(9):
+            if (self.tiles[i][k].value == val and k != j) or (self.tiles[k][j].value == val and k != i):
+                print("Invalid at ", i, j, k)
+                return False
+        
+        start_x = i - (i % 3)
+        start_y = j - (j % 3)
+        for l in range(start_x, start_x + 3):
+            for m in range(start_y, start_y + 3):
+                if self.tiles[l][m].value == val and l != i and m != j:
+                    print("Invalid because: ", l, m)
+                    return False
+        
+        return True

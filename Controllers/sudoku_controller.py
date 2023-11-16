@@ -13,6 +13,7 @@ class SodukoController(Controller):
                 K_ESCAPE: self.quit,
                 K_s: game_state.solve,
                 K_BACKSPACE: self.reset_sprite,
+                K_v: self.game_state.check_solution,
                 K_1: self.set_text,
                 K_2: self.set_text,
                 K_3: self.set_text, 
@@ -29,7 +30,8 @@ class SodukoController(Controller):
 
     def run_action(self, approved_actions=[]):
         # all actions are always approved for this controller.
-        approved_actions.extend([self.quit, self.game_state.solve, self.mouse_down, self.mouse_up, self.set_text, self.reset_sprite])
+        approved_actions.extend([self.quit, self.game_state.solve, self.mouse_down, 
+                                 self.mouse_up, self.set_text, self.reset_sprite, self.game_state.check_solution])
         super().run_action(approved_actions)
     
     def mouse_up(self):
