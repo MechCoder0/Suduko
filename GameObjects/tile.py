@@ -6,11 +6,8 @@ from .generic_sprite import GenericSprite
 class Tile(GenericSprite):
     def __init__(self, location, text, value, can_edit=False, groups=None) -> None:
         self.size = (90, 90)
-        super().__init__(location, self.size, groups=groups, color=(255,255,255))
+        super().__init__(location, self.size, groups=groups, color=(255,255,255), text=text)
         self.can_edit = can_edit
-        self.font = font.SysFont("Arial", 50)
-        self.text = text
-        self.write_text()
         self.clicked = False
         self.value = value
 
@@ -20,12 +17,6 @@ class Tile(GenericSprite):
         
         self.image.fill(Color('dodgerblue2'))
         self.write_text()
-
-    def write_text(self):
-        self.textSurf = self.font.render(self.text, True, (0,0,0))
-        self.W = self.textSurf.get_width()
-        self.H = self.textSurf.get_height()
-        self.image.blit(self.textSurf, [self.size[0]/2 - self.W/2, self.size[1]/2 - self.H/2])
 
     def set_text(self, event):
         self.reset(False)

@@ -4,6 +4,7 @@ from Util.sudoku_generator import Generator
 from Util.sudoku_solver import SudokuSolver
 from Util.number_remover import NumberRemover
 from GameObjects.tile import Tile
+from GameObjects.button import Button
 
 class SudokuEngine(BaseScreen):
     def __init__(self) -> None:
@@ -17,7 +18,14 @@ class SudokuEngine(BaseScreen):
         top_left = (100, 100)
         distance_between = 100
         self.add_numbers(top_left, distance_between, self.puzzle)
+        self.add_buttons()
         super().start_game(self.screen_writer.print_sudoku_board)
+
+    def add_buttons(self):
+        check_solution_button = Button((300,50), (self.WIDTH/2, self.HEIGHT * 0.9), self.check_solution, 
+                                       text="Check Solution", groups=[self.all_sprites])
+        self.clickable.append(check_solution_button)
+
 
     def get_easy_puzzle(self):
         new_puzzle = self.generator.create_puzzle()

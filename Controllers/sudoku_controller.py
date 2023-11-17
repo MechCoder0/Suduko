@@ -1,6 +1,7 @@
 from .base_controller import Controller
 from pygame.locals import *
 from pygame.mouse import get_pos
+from GameObjects.tile import Tile
 
 class SodukoController(Controller):
     def __init__(self, game_state) -> None:
@@ -45,7 +46,7 @@ class SodukoController(Controller):
         pos = get_pos()
 
         for s in self.game_state.clickable:
-            if s.rect.collidepoint(pos) and s.can_edit:
+            if s.rect.collidepoint(pos):
                 s.clicked = clicked
                 if clicked:
                     self.clicked_sprites.append(s)
@@ -55,7 +56,9 @@ class SodukoController(Controller):
 
     def reset_sprite(self, keep_number=False):
         if len(self.clicked_sprites) > 0:
-            self.clicked_sprites.pop().reset(keep_number)
+            sprite = self.clicked_sprites.pop()
+            if type(sprite) is Tile:
+                sprite.reset(keep_number)
 
     def set_text(self):
         length = len(self.clicked_sprites)
