@@ -6,7 +6,10 @@ from .generic_sprite import GenericSprite
 class Tile(GenericSprite):
     def __init__(self, location, text, value, can_edit=False, groups=None) -> None:
         self.size = (90, 90)
-        super().__init__(location, self.size, groups=groups, color=(255,255,255), text=text)
+        color = (255,255,255)
+        if can_edit:
+            color = (255, 200, 200)
+        super().__init__(location, self.size, groups=groups, color=color, text=text)
         self.can_edit = can_edit
         self.clicked = False
         self.value = value
@@ -25,7 +28,7 @@ class Tile(GenericSprite):
         self.write_text()
 
     def reset(self, keep_number):
-        self.image.fill((255,255,255))
+        self.image.fill(self.color)
         if keep_number:
             self.write_text()
         else:

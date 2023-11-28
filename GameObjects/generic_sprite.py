@@ -6,6 +6,7 @@ class GenericSprite(pygame.sprite.Sprite):
         super().__init__()
         self.size = size
         self.surf = pygame.Surface(size)
+        self.color = color
         if path:
             image = pygame.image.load(path)
             self.image = pygame.transform.scale(image, size)
