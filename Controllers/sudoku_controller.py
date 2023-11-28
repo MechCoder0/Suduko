@@ -26,13 +26,14 @@ class SodukoController(Controller):
                 K_9: self.set_text
             },
             MOUSEBUTTONUP:self.mouse_up,
-            MOUSEBUTTONDOWN:self.mouse_down
+            MOUSEBUTTONDOWN:self.mouse_down,
+            VIDEORESIZE: self.resize
         }
 
     def run_action(self, approved_actions=[]):
         # all actions are always approved for this controller.
         approved_actions.extend([self.quit, self.game_state.solve, self.mouse_down, 
-                                 self.mouse_up, self.set_text, self.reset_sprite, self.game_state.check_solution])
+                                 self.mouse_up, self.set_text, self.reset_sprite, self.game_state.check_solution, self.resize])
         super().run_action(approved_actions)
     
     def mouse_up(self):
@@ -49,7 +50,7 @@ class SodukoController(Controller):
             if s.rect.collidepoint(pos):
                 s.clicked = clicked
                 if clicked:
-                    self.clicked_sprites.append(s)
+                    self.clicked_sprites.append(s)p
 
                 if run_function and hasattr(s, "on_click"):
                     s.on_click()
@@ -59,6 +60,11 @@ class SodukoController(Controller):
             sprite = self.clicked_sprites.pop()
             if type(sprite) is Tile:
                 sprite.reset(keep_number)
+
+    def resize(self):
+        print("resize")
+        self.game_state.HEIGHT = self.event.h
+        self.game_state.WIDTH = self.event.w
 
     def set_text(self):
         length = len(self.clicked_sprites)

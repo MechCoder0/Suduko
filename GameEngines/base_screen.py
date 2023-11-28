@@ -16,7 +16,7 @@ class BaseScreen():
         self.HEIGHT = game_data["height"]
         self.WIDTH = game_data["width"]
         self.FPS = game_data["fps"]
-        self.displaysurface = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        self.displaysurface = pygame.display.set_mode((self.WIDTH, self.HEIGHT), pygame.RESIZABLE)
         self.screen_writer = ScreenWriter(self.displaysurface, self)
         self.controller = controller(self)
         self.keep_playing = True

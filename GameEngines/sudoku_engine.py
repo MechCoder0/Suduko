@@ -40,7 +40,7 @@ class SudokuEngine(BaseScreen):
         # remove 15 numbers
         NumberRemover.remove(15, new_puzzle)
         return new_puzzle
-    
+
     def add_numbers(self, start_point, distance, puzzle):
         self.tiles = []
         size = (round(distance * .5), round(distance * .5))
