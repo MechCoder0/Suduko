@@ -1,11 +1,10 @@
-from pygame import font
 from pygame import Color
 from pygame.locals import *
 from .generic_sprite import GenericSprite
 
 class Tile(GenericSprite):
-    def __init__(self, location, text, value, can_edit=False, groups=None) -> None:
-        self.size = (90, 90)
+    def __init__(self, location, text, value, can_edit=False, groups=None, size=(90,90)) -> None:
+        self.size = size
         color = (255,255,255)
         if can_edit:
             color = (255, 200, 200)

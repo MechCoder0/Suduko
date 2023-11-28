@@ -15,8 +15,10 @@ class SudokuEngine(BaseScreen):
         self.tiles = []
 
     def start_game(self):
-        top_left = (100, 100)
-        distance_between = 100
+        top_left = (50, 50)
+        bottom_right = (self.WIDTH *.9, self.HEIGHT *.9)
+        distance_between = (bottom_right[0] - top_left[0])/9
+        top_left = (round(distance_between/2)+ 50, round(distance_between/2) + 50)
         self.add_numbers(top_left, distance_between, self.puzzle)
         self.add_buttons()
         super().start_game(self.screen_writer.print_sudoku_board)
@@ -41,6 +43,7 @@ class SudokuEngine(BaseScreen):
     
     def add_numbers(self, start_point, distance, puzzle):
         self.tiles = []
+        size = (round(distance * .5), round(distance * .5))
         for x in range(9):
             self.tiles.append([])
             for y in range(9):
@@ -48,10 +51,10 @@ class SudokuEngine(BaseScreen):
                 value = puzzle[x][y]
                 can_edit = value == 0
                 if can_edit:
-                    tile = Tile(location, '', value, can_edit=True, groups=[self.all_sprites])
+                    tile = Tile(location, '', value, can_edit=True, groups=[self.all_sprites], size=size)
                     self.clickable.append(tile)
                 else:
-                    tile = Tile(location, str(puzzle[x][y]), value, groups=[self.all_sprites])
+                    tile = Tile(location, str(puzzle[x][y]), value, groups=[self.all_sprites], size=size)
                 self.tiles[x].append(tile)
                 
 
