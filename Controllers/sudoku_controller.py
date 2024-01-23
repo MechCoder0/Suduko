@@ -50,7 +50,7 @@ class SodukoController(Controller):
             if s.rect.collidepoint(pos):
                 s.clicked = clicked
                 if clicked:
-                    self.clicked_sprites.append(s)p
+                    self.clicked_sprites.append(s)
 
                 if run_function and hasattr(s, "on_click"):
                     s.on_click()
