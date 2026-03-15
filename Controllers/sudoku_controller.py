@@ -23,7 +23,16 @@ class SodukoController(Controller):
                 K_6: self.set_text,
                 K_7: self.set_text,
                 K_8: self.set_text,
-                K_9: self.set_text
+                K_9: self.set_text,
+                K_KP1: self.set_text,
+                K_KP2: self.set_text,
+                K_KP3: self.set_text,
+                K_KP4: self.set_text,
+                K_KP5: self.set_text,
+                K_KP6: self.set_text,
+                K_KP7: self.set_text,
+                K_KP8: self.set_text,
+                K_KP9: self.set_text
             },
             MOUSEBUTTONUP:self.mouse_up,
             MOUSEBUTTONDOWN:self.mouse_down,
