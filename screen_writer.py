@@ -77,15 +77,13 @@ class ScreenWriter:
 
 
     def draw_square(self, top_left, bottom_right):
+        width = 15
+        half = width // 2
         top = top_left[1]
         left = top_left[0]
         bottom = bottom_right[1]
         right = bottom_right[0]
-        top_left = (left,top)
-        top_right = (right, top)
-        bottom_left = (left, bottom)
-        bottom_right = (right, bottom)
-        pygame.draw.line(self.surface, self.BLACK, top_left, top_right, 15)
-        pygame.draw.line(self.surface, self.BLACK, top_left, bottom_left, 15)
-        pygame.draw.line(self.surface, self.BLACK, bottom_left, bottom_right, 15)
-        pygame.draw.line(self.surface, self.BLACK, bottom_right, top_right, 15)
+        pygame.draw.line(self.surface, self.BLACK, (left - half, top), (right + half, top), width)
+        pygame.draw.line(self.surface, self.BLACK, (left, top - half), (left, bottom + half), width)
+        pygame.draw.line(self.surface, self.BLACK, (left - half, bottom), (right + half, bottom), width)
+        pygame.draw.line(self.surface, self.BLACK, (right, top - half), (right, bottom + half), width)
