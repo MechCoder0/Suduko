@@ -32,6 +32,7 @@ class BaseScreen():
             else:
                 screen()
             self.controller.run_action()
+            self.all_sprites.update()
             self.all_sprites.draw(self.displaysurface)
             
             pygame.display.update()

@@ -5,6 +5,7 @@ from Util.sudoku_solver import SudokuSolver
 from Util.number_remover import NumberRemover
 from GameObjects.tile import Tile
 from GameObjects.button import Button
+from GameObjects.firework import Firework
 
 class SudokuEngine(BaseScreen):
     def __init__(self) -> None:
@@ -97,13 +98,9 @@ class SudokuEngine(BaseScreen):
     def check_solution(self):
         for x in range(len(self.tiles)):
             for y in range(len(self.tiles[x])):
-                print("Checking:", x, y)
-                is_valid = self.is_valid(x, y, self.tiles[x][y].value)
-                print("It is valid: ", is_valid)
-                if not is_valid:
-                    print("Is not the valid solution")
+                if not self.is_valid(x, y, self.tiles[x][y].value):
                     return False
-        print("Is the valid solution.")
+        Firework.launch(self.WIDTH, self.HEIGHT, [self.all_sprites])
         return True
     
     def is_valid(self, i, j, val):
