@@ -7,6 +7,7 @@ class Generator():
         self.min = 17
 
     def create_puzzle(self):
+        self.min = 17
         new_board = self.new_board()
         self.generate_puzzle(0,0, new_board)
         return new_board
