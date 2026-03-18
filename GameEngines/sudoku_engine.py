@@ -93,7 +93,11 @@ class SudokuEngine(BaseScreen):
 
     def solve(self):
         SudokuSolver(self.puzzle).solve_puzzle()
-        self.add_numbers((100, 100), 100, self.puzzle)
+        for tile in self.tiles:
+            for t in tile:
+                t.kill()
+        self.clickable = [s for s in self.clickable if not isinstance(s, Tile)]
+        self.add_numbers(self.top_left, self.distance_between, self.puzzle)
 
     def check_solution(self):
         for x in range(len(self.tiles)):
