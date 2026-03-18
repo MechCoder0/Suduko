@@ -60,7 +60,7 @@ class SodukoController(Controller):
         for s in self.game_state.clickable:
             if s.rect.collidepoint(pos):
                 s.clicked = clicked
-                if clicked:
+                if clicked and isinstance(s, Tile):
                     self.clicked_sprites.append(s)
 
                 if run_function and hasattr(s, "on_click"):
