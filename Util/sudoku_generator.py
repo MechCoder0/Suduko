@@ -1,50 +1,39 @@
 import random
 from .sudoku_util import SudokuUtil
+import copy
 
 class Generator():
 
-    def __init__(self) -> None:
-        self.min = 17
-
     def create_puzzle(self):
-        self.min = 17
-        new_board = self.new_board()
-        self.generate_puzzle(0,0, new_board)
-        return new_board
-    
+        board = self.new_board()
+        self.fill(board)
+        puzzle = copy.deepcopy(board)
+        NumberRemover.remove(40, puzzle)
+        return puzzle
 
     def new_board(self):
-        return [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        ]
-    
-    def generate_puzzle(self, x, y, board):
-        if self.min <= 0:
-            return True
-        
-        rand_x = random.randint(0, 8)
-        rand_y = random.randint(0, 8)
+        return [[0]*9 for _ in range(9)]
 
-        if board[x][y] != 0:
-            return self.generate_puzzle(rand_x, rand_y, board)
-        
-        for val in range(1, 10):
-            if board[x][y] == 0 and SudokuUtil.is_valid(x, y, val, board):
-                board[x][y] = val
-                self.min -= 1
+    def fill(self, board):
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == 0:
+                    nums = list(range(1, 10))
+                    random.shuffle(nums)
+                    for val in nums:
+                        if SudokuUtil.is_valid(i, j, val, board):
+                            board[i][j] = val
+                            if self.fill(board):
+                                return True
+                            board[i][j] = 0
+                    return False
+        return True
 
-                if self.generate_puzzle(rand_x, rand_y, board):
-                    return True
-                
-                board[x][y] = 0
-                self.min +=1
 
-        return False
+class NumberRemover():
+    @staticmethod
+    def remove(nums_to_remove, board):
+        cells = [(i, j) for i in range(9) for j in range(9)]
+        random.shuffle(cells)
+        for i, j in cells[:nums_to_remove]:
+            board[i][j] = 0

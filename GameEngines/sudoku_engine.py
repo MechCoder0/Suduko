@@ -2,7 +2,6 @@ from .base_screen import BaseScreen
 from Controllers.sudoku_controller import SodukoController
 from Util.sudoku_generator import Generator
 from Util.sudoku_solver import SudokuSolver
-from Util.number_remover import NumberRemover
 from GameObjects.tile import Tile
 from GameObjects.button import Button
 from GameObjects.firework import Firework
@@ -63,16 +62,7 @@ class SudokuEngine(BaseScreen):
         self.add_numbers(self.top_left, self.distance_between, self.puzzle)
 
     def get_easy_puzzle(self):
-        new_puzzle = self.generator.create_puzzle()
-        # solve the puzzle
-        can_solve = SudokuSolver(new_puzzle).solve_puzzle()
-        while not can_solve:
-            print("Making a new puzzle")
-            new_puzzle = self.generator.create_puzzle()
-            can_solve = SudokuSolver(new_puzzle).solve_puzzle()
-        # remove 15 numbers
-        NumberRemover.remove(15, new_puzzle)
-        return new_puzzle
+        return self.generator.create_puzzle()
 
     def add_numbers(self, start_point, distance, puzzle):
         self.tiles = []
