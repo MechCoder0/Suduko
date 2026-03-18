@@ -15,22 +15,43 @@ class SudokuEngine(BaseScreen):
         self.tiles = []
 
     def start_game(self):
-        self.top_left = (50, 50)
-        bottom_right = (self.WIDTH *.9, self.HEIGHT *.9)
-        distance_between = (bottom_right[0] - self.top_left[0])/9
-        self.top_left = (round(distance_between/2)+ 50, round(distance_between/2) + 50)
-        self.distance_between = distance_between
-        self.add_numbers(self.top_left, distance_between, self.puzzle)
+        self.calculate_layout()
+        self.add_numbers(self.top_left, self.distance_between, self.puzzle)
         self.add_buttons()
         super().start_game(self.screen_writer.print_sudoku_board)
 
+    def calculate_layout(self):
+        board_size = min(self.WIDTH, self.HEIGHT) * 0.8
+        self.distance_between = board_size / 9
+        left = (self.WIDTH - board_size) / 2
+        top = (self.HEIGHT - board_size) / 2
+        self.top_left = (round(left + self.distance_between / 2), round(top + self.distance_between / 2))
+
     def add_buttons(self):
-        check_solution_button = Button((300,50), (self.WIDTH/2, self.HEIGHT * 0.9), self.check_solution, 
+        btn_w = round(self.WIDTH * 0.25)
+        btn_h = round(self.HEIGHT * 0.05)
+        board_size = min(self.WIDTH, self.HEIGHT) * 0.8
+        board_bottom = (self.HEIGHT - board_size) / 2 + board_size
+        btn_y = board_bottom + (self.HEIGHT - board_bottom) / 2
+        spacing = btn_w * 0.6
+        center_x = self.WIDTH / 2
+        check_solution_button = Button((btn_w, btn_h), (center_x + spacing, btn_y), self.check_solution,
                                        text="Check Solution", groups=[self.all_sprites])
-        new_game_button = Button((300,50), (self.WIDTH/4, self.HEIGHT * 0.9), self.make_new_game, 
+        new_game_button = Button((btn_w, btn_h), (center_x - spacing, btn_y), self.make_new_game,
                                        text="New Game", groups=[self.all_sprites])
         self.clickable.append(check_solution_button)
         self.clickable.append(new_game_button)
+
+    def rebuild(self):
+        for tile in self.tiles:
+            for t in tile:
+                t.kill()
+        for s in [s for s in self.clickable if isinstance(s, Button)]:
+            s.kill()
+        self.clickable.clear()
+        self.calculate_layout()
+        self.add_numbers(self.top_left, self.distance_between, self.puzzle)
+        self.add_buttons()
 
     def make_new_game(self):
         for tile in self.tiles:

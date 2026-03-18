@@ -13,9 +13,10 @@ class BaseScreen():
         self.gda = GameDataAccessor("GameData/data.json")
         game_data = self.gda.get_game_data()
         self.game_data = game_data
-        self.HEIGHT = game_data["height"]
-        self.WIDTH = game_data["width"]
         self.FPS = game_data["fps"]
+        monitor = pygame.display.get_desktop_sizes()[0]
+        self.WIDTH = monitor[0] // 2
+        self.HEIGHT = monitor[1] // 2
         self.displaysurface = pygame.display.set_mode((self.WIDTH, self.HEIGHT), pygame.RESIZABLE)
         self.screen_writer = ScreenWriter(self.displaysurface, self)
         self.controller = controller(self)

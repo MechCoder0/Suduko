@@ -2,6 +2,8 @@ from .base_controller import Controller
 from pygame.locals import *
 from pygame.mouse import get_pos
 from GameObjects.tile import Tile
+from pygame.display import set_mode
+from pygame import RESIZABLE
 
 class SodukoController(Controller):
     def __init__(self, game_state) -> None:
@@ -71,9 +73,11 @@ class SodukoController(Controller):
                 sprite.reset(keep_number)
 
     def resize(self):
-        print("resize")
         self.game_state.HEIGHT = self.event.h
         self.game_state.WIDTH = self.event.w
+        self.game_state.displaysurface = set_mode((self.event.w, self.event.h), RESIZABLE)
+        self.game_state.screen_writer.surface = self.game_state.displaysurface
+        self.game_state.rebuild()
 
     def set_text(self):
         length = len(self.clicked_sprites)

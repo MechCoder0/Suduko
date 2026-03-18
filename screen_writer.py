@@ -47,10 +47,12 @@ class ScreenWriter:
     def print_sudoku_board(self):
         self.surface.fill(self.WHITE)
 
-        #Board is 900 x 900 px
-        top_left = (50, 50)
-        bottom_right = (self.screen_width *.9, self.screen_width *.9)
-        distance_between = (bottom_right[0] - top_left[0])/9
+        board_size = min(self.game_state.WIDTH, self.game_state.HEIGHT) * 0.8
+        left = (self.game_state.WIDTH - board_size) / 2
+        top = (self.game_state.HEIGHT - board_size) / 2
+        top_left = (left, top)
+        bottom_right = (left + board_size, top + board_size)
+        distance_between = board_size / 9
 
         self.draw_square(top_left, bottom_right)
         self.draw_vertical_soduko(top_left[1], bottom_right[1], distance_between, top_left[0])
