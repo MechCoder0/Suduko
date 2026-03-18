@@ -15,19 +15,30 @@ class SudokuEngine(BaseScreen):
         self.tiles = []
 
     def start_game(self):
-        top_left = (50, 50)
+        self.top_left = (50, 50)
         bottom_right = (self.WIDTH *.9, self.HEIGHT *.9)
-        distance_between = (bottom_right[0] - top_left[0])/9
-        top_left = (round(distance_between/2)+ 50, round(distance_between/2) + 50)
-        self.add_numbers(top_left, distance_between, self.puzzle)
+        distance_between = (bottom_right[0] - self.top_left[0])/9
+        self.top_left = (round(distance_between/2)+ 50, round(distance_between/2) + 50)
+        self.distance_between = distance_between
+        self.add_numbers(self.top_left, distance_between, self.puzzle)
         self.add_buttons()
         super().start_game(self.screen_writer.print_sudoku_board)
 
     def add_buttons(self):
         check_solution_button = Button((300,50), (self.WIDTH/2, self.HEIGHT * 0.9), self.check_solution, 
                                        text="Check Solution", groups=[self.all_sprites])
+        new_game_button = Button((300,50), (self.WIDTH/4, self.HEIGHT * 0.9), self.make_new_game, 
+                                       text="New Game", groups=[self.all_sprites])
         self.clickable.append(check_solution_button)
+        self.clickable.append(new_game_button)
 
+    def make_new_game(self):
+        for tile in self.tiles:
+            for t in tile:
+                t.kill()
+        self.clickable = [s for s in self.clickable if not isinstance(s, Tile)]
+        self.puzzle = self.get_easy_puzzle()
+        self.add_numbers(self.top_left, self.distance_between, self.puzzle)
 
     def get_easy_puzzle(self):
         new_puzzle = self.generator.create_puzzle()
