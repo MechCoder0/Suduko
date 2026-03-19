@@ -5,6 +5,7 @@ from Util.sudoku_solver import SudokuSolver
 from GameObjects.tile import Tile
 from GameObjects.button import Button
 from GameObjects.firework import Firework
+from GameObjects.red_x import RedX
 
 class SudokuEngine(BaseScreen):
     def __init__(self) -> None:
@@ -93,6 +94,7 @@ class SudokuEngine(BaseScreen):
         for x in range(len(self.tiles)):
             for y in range(len(self.tiles[x])):
                 if not self.is_valid(x, y, self.tiles[x][y].value):
+                    RedX(self.WIDTH, self.HEIGHT, [self.all_sprites])
                     return False
         Firework.launch(self.WIDTH, self.HEIGHT, [self.all_sprites])
         return True
