@@ -1,4 +1,6 @@
 from pygame.locals import *
+from pygame.display import set_mode
+from pygame import RESIZABLE
 from .base_controller import Controller
 
 class StartScreenController(Controller):
@@ -10,15 +12,20 @@ class StartScreenController(Controller):
             KEYDOWN: {
                 K_ESCAPE: self.quit,
                 K_RETURN: self.start_chosen_game
-            }
+            },
+            VIDEORESIZE: self.resize
         }
 
     def run_action(self, approved_actions=[]):
-        # all actions are always approved for this controller.
-        approved_actions.extend([self.quit, self.start_chosen_game])
+        approved_actions.extend([self.quit, self.start_chosen_game, self.resize])
         return super().run_action(approved_actions)
+
+    def resize(self):
+        self.game_state.WIDTH = self.event.w
+        self.game_state.HEIGHT = self.event.h
+        self.game_state.displaysurface = set_mode((self.event.w, self.event.h), RESIZABLE)
+        self.game_state.screen_writer.surface = self.game_state.displaysurface
 
     def start_chosen_game(self):
         self.game_state.selections[self.chosen_game][0].start_game()
-        # if the game loop ends, return to start screen
         self.game_state.start_game()

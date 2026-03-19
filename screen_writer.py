@@ -40,9 +40,11 @@ class ScreenWriter:
 
     def print_start_screen(self):
         self.surface.fill(self.SCREEN_BACKGROUND_COLOR)
-        self.write_text((0, self.screen_height/4), "Sudoku")
-        self.write_text((0, self.screen_height/2), "Press Enter to start!")
-        self.write_text((0, self.screen_height * .75), "Begin!", True, Util.get_middle(0, self.screen_width))
+        w = self.game_state.WIDTH
+        h = self.game_state.HEIGHT
+        self.write_text((0, h / 4), "Sudoku", middle=w / 2)
+        self.write_text((0, h / 2), "Press Enter to start!", middle=w / 2)
+        self.write_text((0, h * .75), "Begin!", True, Util.get_middle(0, w))
 
     def print_sudoku_board(self):
         self.surface.fill(self.WHITE)
