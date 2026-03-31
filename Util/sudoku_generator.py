@@ -4,11 +4,20 @@ import copy
 
 class Generator():
 
-    def create_puzzle(self):
+    def create_puzzle(self, difficulty="easy"):
         board = self.new_board()
         self.fill(board)
         puzzle = copy.deepcopy(board)
-        NumberRemover.remove(40, puzzle)
+
+        # Determine how many numbers to remove based on difficulty
+        if difficulty == "easy":
+            remove_count = 30
+        elif difficulty == "medium":
+            remove_count = 45
+        else: # hard
+            remove_count = 60
+
+        NumberRemover.remove(remove_count, puzzle)
         return puzzle
 
     def new_board(self):

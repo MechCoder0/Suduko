@@ -8,9 +8,10 @@ from Util.util import Util
 class PlayEngine(BaseScreen):
     def __init__(self) -> None:
         super().__init__(StartScreenController)
+        sudoku_engine = SudokuEngine()
         self.selections = [
-            (SudokuEngine(), (0, self.WIDTH)),
-            (LevelSelectEngine(), (0, self.WIDTH))
+            (sudoku_engine, (0, self.WIDTH)),
+            (LevelSelectEngine(sudoku_engine), (0, self.WIDTH))
         ]
 
     def start_game(self):

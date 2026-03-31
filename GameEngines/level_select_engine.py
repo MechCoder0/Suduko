@@ -3,8 +3,9 @@ from Controllers.level_select_controller import LevelSelectController
 from GameObjects.button import Button
 
 class LevelSelectEngine(BaseScreen):
-    def __init__(self) -> None:
+    def __init__(self, sudoku_engine) -> None:
         super().__init__(LevelSelectController)
+        self.sudoku_engine = sudoku_engine
         self.clickable = []
 
     def start_game(self):
@@ -39,6 +40,7 @@ class LevelSelectEngine(BaseScreen):
 
     def select_level(self, level):
         print(f"Selected level: {level}")
-        # Logic to initiate the game with the selected level would go here.
-        # For now, we return to the previous screen flow.
+        self.sudoku_engine.difficulty = level
+        self.sudoku_engine.puzzle = self.sudoku_engine.get_puzzle()
+        self.sudoku_engine.start_game()
         self.return_to_start_screen()

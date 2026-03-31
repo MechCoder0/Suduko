@@ -11,11 +11,17 @@ class SudokuEngine(BaseScreen):
     def __init__(self) -> None:
         super().__init__(SodukoController)
         self.generator = Generator()
-        self.puzzle = self.get_easy_puzzle()
+        self.difficulty = "easy"
+        self.puzzle = self.get_puzzle()
         self.clickable = []
         self.tiles = []
 
     def start_game(self):
+        # Cleanup existing objects to prevent duplicates on restart
+        for s in self.all_sprites:
+            s.kill()
+        self.clickable.clear()
+
         self.calculate_layout()
         self.add_numbers(self.top_left, self.distance_between, self.puzzle)
         self.add_buttons()
@@ -59,11 +65,11 @@ class SudokuEngine(BaseScreen):
             for t in tile:
                 t.kill()
         self.clickable = [s for s in self.clickable if not isinstance(s, Tile)]
-        self.puzzle = self.get_easy_puzzle()
+        self.puzzle = self.get_puzzle()
         self.add_numbers(self.top_left, self.distance_between, self.puzzle)
 
-    def get_easy_puzzle(self):
-        return self.generator.create_puzzle()
+    def get_puzzle(self):
+        return self.generator.create_puzzle(self.difficulty)
 
     def add_numbers(self, start_point, distance, puzzle):
         self.tiles = []
